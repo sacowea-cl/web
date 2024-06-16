@@ -1,9 +1,9 @@
 const img = document.getElementById("img")
 
 validSrcs = [
-    "/assets/image.png",
-    "/assets/default_panxi.jpg",
-    "/assets/cooler_panxi.png",
+    "assets/default_panxi.jpg",
+    "assets/moaning_agustin.png",
+    "assets/cooler_panxi.png",
 ]
 
 let currentImage = Math.floor(Math.random() * validSrcs.length)

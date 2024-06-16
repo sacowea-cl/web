@@ -1,15 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 
-const imageImport = import.meta.glob('/public/pics/*')
-const images = Object.keys(imageImport)
+const images = import.meta.glob('../assets/pics/*', { import: 'default' })
 const currentImgSrc = ref('')
 const currentTitle = ref('')
 
-const setRandomImageSrc = () => {
-  const randomIndex = Math.floor(Math.random() * images.length)
-  currentImgSrc.value = images[randomIndex]
-  currentTitle.value = images[randomIndex].split('/').pop()
+const setRandomImageSrc = async () => {
+  const keys = Object.keys(images)
+  const randomIndex = Math.floor(Math.random() * keys.length)
+  const randomKey = keys[randomIndex]
+
+  const image = await images[randomKey]()
+  currentImgSrc.value = image
+  currentTitle.value = image.split('/').pop().split('.')[0]
 }
 
 setRandomImageSrc()

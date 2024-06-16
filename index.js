@@ -6,10 +6,12 @@ validSrcs = [
     "/assets/cooler_panxi.png",
 ]
 
-let currentImage = 0
+let currentImage = Math.floor(Math.random() * validSrcs.length)
 
 img.addEventListener("click", () => {
   img.src = validSrcs[currentImage]
   currentImage = (currentImage + 1) % validSrcs.length
 })
+
+img.src = validSrcs[currentImage]
 

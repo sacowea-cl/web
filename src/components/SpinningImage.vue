@@ -42,13 +42,13 @@ const mouseDown = (e) => {
 }
 
 const mouseUp = (e) => {
-  const x = (e.clientX - clickCoordinates.x) / window.innerWidth
-  const y = (e.clientY - clickCoordinates.y) / window.innerHeight
+  // const x = (e.clientX - clickCoordinates.x) / window.innerWidth
+  // const y = (e.clientY - clickCoordinates.y) / window.innerHeight
 
-  console.log(x, y)
+  // console.log(x, y)
 
-  angle.value.x = -y
-  angle.value.y = x
+  // angle.value.x = -y
+  // angle.value.y = x
 }
 
 

@@ -1,6 +1,7 @@
 const img = document.getElementById("img")
 
 validSrcs = [
+    "/assets/image.png",
     "/assets/default_panxi.jpg",
     "/assets/cooler_panxi.png",
 ]

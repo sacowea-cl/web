@@ -1,6 +1,7 @@
 img {
     animation: rotateY 10s linear infinite;
-    width: 30rem;
+    height: 100vh;
+    padding: 0px;
 }
 
 #main_title {
@@ -8,12 +9,14 @@ img {
     justify-content: center;
     align-items: center;
     font-size: 3rem;
+    padding-bottom: 0px;
 }
 
 .center {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 0px;
     height: 100vh;
     width: 100vw;
 }

@@ -12,8 +12,10 @@ const setRandomImageSrc = async () => {
 
   const image = await images[randomKey]()
   currentImgSrc.value = image
-  currentTitle.value = image.split('/').pop().split('.')[0]
+  console.log(image)
+  currentTitle.value = image.match(/([a-zA-Z]+_[a-zA-Z]+)/)[0]
 }
+
 
 setRandomImageSrc()
 </script>

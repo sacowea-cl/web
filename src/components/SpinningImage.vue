@@ -105,7 +105,7 @@ h1 {
 
   transform-style: preserve-3d;
   filter: brightness(1);
-  box-shadow: -40px 80px 80px -10px rgba(0, 0, 0, 0.7);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.7);
   /* transform: scale(1, 1); */
 }
 

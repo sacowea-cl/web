@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const images = import.meta.glob('../assets/pics/*', { import: 'default' })
 const currentImgSrc = ref('')
@@ -17,47 +17,40 @@ const setRandomImageSrc = async () => {
 }
 setRandomImageSrc()
 
-const angle = ref({ x: 1, y: 1 })
+const XY = ref({ x: 1, y: 1 });
+const angulos = ref({ seno: 0, coseno: 0 });
+const imageContainerRef = ref(null)
 
-const clickCoordinates = { x: 0, y: 0 }
+const handleMouseMove = (event) => {
+  const rect = imageContainerRef.value.getBoundingClientRect()
+  const top = rect.top
+  const left = rect.left
 
-const mouseClick = (e) => {
+  const { clientX, clientY } = event
+  const middleX = left + rect.width / 2
+  const middleY = top + rect.height / 2
+  
+  XY.value = {
+    x: (clientX - middleX) / middleX,
+    y: (clientY - middleY) / middleY,
+  }
 
+  const arctan2 = Math.atan2(XY.value.y, XY.value.x);
+  angulos.value = {
+    seno: Math.sin(arctan2),
+    coseno: Math.cos(arctan2),
+  }
+
+  console.log(`Seno: ${angulos.value.seno}, Coseno: ${angulos.value.coseno}`);
 }
-
-const mouseDown = (e) => {
-  // const middleX = window.innerWidth / 2
-  // const distanceX = (e.clientX - middleX) / middleX
-
-  // const middleY = window.innerHeight / 2
-  // const distanceY = -(e.clientY - middleY) / middleY
-
-
-  // console.log(distanceX, distanceY)
-  // angle.value.x = distanceY
-  // angle.value.y = distanceX
-
-  clickCoordinates.x = e.clientX
-  clickCoordinates.y = e.clientY
-}
-
-const mouseUp = (e) => {
-  // const x = (e.clientX - clickCoordinates.x) / window.innerWidth
-  // const y = (e.clientY - clickCoordinates.y) / window.innerHeight
-
-  // console.log(x, y)
-
-  // angle.value.x = -y
-  // angle.value.y = x
-}
-
+document.addEventListener('mousemove', handleMouseMove);
 
 </script>
 
 <template>
   <h1>{{ currentTitle }}</h1>
-  <main class="main" @mousedown="mouseDown" @mouseup="mouseUp">
-    <div class="imageContainer">
+  <main class="main">
+    <div class="imageContainer" ref="imageContainerRef">
       <img :src="currentImgSrc" class="spinningImage" @click="setRandomImageSrc()" />
     </div>
   </main>
@@ -79,16 +72,6 @@ h1 {
   text-align: center;
 }
 
-.master {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: -1;
-}
-
 .imageContainer {
   height: 50%;
   /* animation: spin 10s linear infinite; */
@@ -106,24 +89,23 @@ h1 {
   transform-style: preserve-3d;
   filter: brightness(1);
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.7);
-  /* transform: scale(1, 1); */
 }
 
 
 
 @keyframes spin {
   0% {
-    transform: rotate3d(v-bind('angle.x'), v-bind('angle.y'), 0, 0deg);
+    transform: rotate3d(0, 0, 0, 0deg);
 
   }
 
   50% {
-    transform: rotate3d(v-bind('angle.x'), v-bind('angle.y'), 0, 180deg);
+    transform: rotate3d(v-bind('-angulos.seno'), v-bind('angulos.coseno'), 0, 180deg);
 
   }
 
   100% {
-    transform: rotate3d(v-bind('angle.x'), v-bind('angle.y'), 0, 360deg);
+    transform: rotate3d(v-bind('-angulos.seno'), v-bind('angulos.coseno'), 0, 360deg);
   }
 }
 

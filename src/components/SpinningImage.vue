@@ -18,7 +18,7 @@ const setRandomImageSrc = async () => {
 setRandomImageSrc()
 
 const XY = ref({ x: 1, y: 1 });
-const angulos = ref({ seno: 0, coseno: 0 });
+const angulos = ref({ seno: 0, coseno: 1 });
 const imageContainerRef = ref(null)
 
 const handleMouseMove = (event) => {
@@ -45,10 +45,15 @@ const handleMouseMove = (event) => {
 }
 document.addEventListener('mousemove', handleMouseMove);
 
+const parseImgTitle = (image) => {
+  image = image.split('_')
+  return image.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+}
+
 </script>
 
 <template>
-  <h1>{{ currentTitle }}</h1>
+  <h1>{{ parseImgTitle(currentTitle) }}</h1>
   <main class="main">
     <div class="imageContainer" ref="imageContainerRef">
       <img :src="currentImgSrc" class="spinningImage" @click="setRandomImageSrc()" />
@@ -89,6 +94,8 @@ h1 {
   transform-style: preserve-3d;
   filter: brightness(1);
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.7);
+
+  border-radius: 5%;
 }
 
 
